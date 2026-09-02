@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkIntel OSINT — Executive Profile & Professional Intelligence Scanner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #070D18; color: #E2E8F0; min-height: 100vh; }
+        .glass { background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.08); }
+        .glow-blue { box-shadow: 0 0 25px rgba(10, 102, 194, 0.25); border-color: rgba(10, 102, 194, 0.5); }
+    </style>
+</head>
+<body class="selection:bg-blue-500 selection:text-white">
+    <header class="glass sticky top-0 z-50 border-b border-white/10 px-6 py-3.5 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-xl bg-[#0A66C2] flex items-center justify-center text-white text-lg shadow-lg shadow-blue-500/30">
+                <i class="fa-brands fa-linkedin-in"></i>
+            </div>
+            <div>
+                <span class="font-extrabold text-white text-lg tracking-tight">LinkIntel <span class="text-blue-400">OSINT</span></span>
+                <p class="text-[11px] text-slate-400">Automated Profile Intelligence & Public Metadata Miner</p>
+            </div>
+        </div>
+        <a href="https://github.com/Jigyasha1712/LinkedIn-OSINT-Profile-Scraper" target="_blank" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-white border border-slate-700 transition flex items-center space-x-2">
+            <i class="fa-brands fa-github"></i><span>GitHub Repo</span>
+        </a>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 space-y-6">
+        <div class="glass p-6 rounded-2xl relative overflow-hidden">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-white mb-2">Public Professional OSINT <span class="text-blue-400">Intelligence Search</span></h1>
+            <p class="text-xs sm:text-sm text-slate-300 max-w-2xl">Construct advanced X-Ray boolean dorks, extract company personnel directory structures, and inspect organizational hierarchy securely.</p>
+        </div>
+
+        <div class="glass p-5 rounded-2xl space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <input type="text" id="input-role" value="Lead Data Scientist" placeholder="Job Title / Role" class="bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
+                <input type="text" id="input-company" value="Google OR Microsoft" placeholder="Target Company" class="bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
+                <input type="text" id="input-location" value="Bengaluru, India" placeholder="Location" class="bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500">
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+                <div class="flex items-center space-x-2 text-xs">
+                    <span class="text-slate-400">Demos:</span>
+                    <button onclick="setQuery('AI Research Scientist', 'Meta OR OpenAI', 'Remote')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-blue-950 text-blue-300 text-xs transition">AI Researcher</button>
+                    <button onclick="setQuery('VP of Marketing', 'Unilever OR Nestle', 'Mumbai')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-blue-950 text-blue-300 text-xs transition">Marketing VP</button>
+                    <button onclick="setQuery('Chief Information Security Officer', 'Fintech', 'India')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-blue-950 text-blue-300 text-xs transition">CISO Fintech</button>
+                </div>
+                <button onclick="runSearch()" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs shadow-lg shadow-blue-600/30 transition flex items-center space-x-2">
+                    <i class="fa-solid fa-magnifying-glass"></i><span>Generate Dork & Query</span>
+                </button>
+            </div>
+
+            <div class="p-3 bg-slate-950 rounded-xl font-mono text-xs text-cyan-400 border border-slate-800 overflow-x-auto flex items-center justify-between">
+                <span id="dork-display">site:linkedin.com/in/ ("Lead Data Scientist") AND ("Google" OR "Microsoft") AND ("Bengaluru")</span>
+                <button onclick="navigator.clipboard.writeText(document.getElementById('dork-display').innerText); alert('Copied Dork to Clipboard!')" class="ml-3 px-2 py-0.5 rounded bg-slate-800 text-slate-300 text-[10px] hover:bg-slate-700">Copy</button>
+            </div>
+        </div>
+
+        <div class="space-y-3">
+            <div class="flex items-center justify-between">
+                <h3 class="font-bold text-white text-sm">Discovered Public Candidate Profiles (<span id="count" class="text-blue-400">4</span>)</h3>
+                <span class="text-xs font-mono text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i>Verified OSINT Patterns</span>
+            </div>
+            <div id="results-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const sampleData = [
+            { name: "Aarav Sharma", title: "Principal Data Scientist", company: "Google Cloud", location: "Bengaluru, India", match: "98%", avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&auto=format&fit=crop&q=80", tags: ["NLP", "PyTorch", "LLM Fine-Tuning"] },
+            { name: "Priya Nair", title: "Staff ML Engineer", company: "Microsoft AI", location: "Bengaluru, India", match: "95%", avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&auto=format&fit=crop&q=80", tags: ["Kubernetes", "AzureML", "Distributed Systems"] },
+            { name: "Rohan Varma", title: "VP Marketing & Analytics", company: "Consumer Tech", location: "Mumbai, India", match: "91%", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=80", tags: ["Brand Growth", "Attribution", "AdTech"] },
+            { name: "Ananya Deshmukh", title: "CISO & Security Director", company: "Fintech Enterprise", location: "Pune, India", match: "94%", avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&auto=format&fit=crop&q=80", tags: ["SOC2", "Cloud Security", "Threat Modeling"] }
+        ];
+
+        function renderCards() {
+            const grid = document.getElementById('results-grid');
+            grid.innerHTML = '';
+            sampleData.forEach(item => {
+                grid.innerHTML += `
+                    <div class="glass p-4 rounded-xl flex items-start space-x-3.5 hover:border-blue-500/40 transition">
+                        <img src="${item.avatar}" class="w-12 h-12 rounded-xl object-cover border border-slate-700">
+                        <div class="space-y-1 flex-1">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-white text-sm">${item.name}</span>
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-blue-950 text-blue-400 border border-blue-800/40">${item.match} match</span>
+                            </div>
+                            <p class="text-xs text-slate-300 font-medium">${item.title} @ <span class="text-white">${item.company}</span></p>
+                            <p class="text-[11px] text-slate-400"><i class="fa-solid fa-location-dot mr-1"></i>${item.location}</p>
+                            <div class="flex flex-wrap gap-1 pt-1.5">
+                                ${item.tags.map(t => `<span class="px-2 py-0.5 rounded-md text-[9px] bg-slate-800 text-slate-300 font-mono">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function setQuery(role, comp, loc) {
+            document.getElementById('input-role').value = role;
+            document.getElementById('input-company').value = comp;
+            document.getElementById('input-location').value = loc;
+            runSearch();
+        }
+
+        function runSearch() {
+            const r = document.getElementById('input-role').value || 'Professional';
+            const c = document.getElementById('input-company').value || 'Company';
+            const l = document.getElementById('input-location').value || 'Location';
+            document.getElementById('dork-display').innerText = `site:linkedin.com/in/ ("${r}") AND ("${c}") AND ("${l}")`;
+            renderCards();
+        }
+
+        window.onload = renderCards;
+    </script>
+</body>
+</html>
